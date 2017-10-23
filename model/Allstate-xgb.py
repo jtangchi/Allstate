@@ -103,21 +103,10 @@ if __name__ == "__main__":
             train_test[column] = train_test[column].apply(lambda x: filter_cat(x), 1)
 
     ## Feature: data normalization. 
-    train_test["cont1"] = np.sqrt(preprocessing.minmax_scale(train_test["cont1"]))
-    train_test["cont4"] = np.sqrt(preprocessing.minmax_scale(train_test["cont4"]))
-    train_test["cont5"] = np.sqrt(preprocessing.minmax_scale(train_test["cont5"]))
-    train_test["cont8"] = np.sqrt(preprocessing.minmax_scale(train_test["cont8"]))
-    train_test["cont10"] = np.sqrt(preprocessing.minmax_scale(train_test["cont10"]))
-    train_test["cont11"] = np.sqrt(preprocessing.minmax_scale(train_test["cont11"]))
-    train_test["cont12"] = np.sqrt(preprocessing.minmax_scale(train_test["cont12"]))
+    norm_feature = ['cont1', 'cont4','cont5','cont6','cont7','cont9','cont10','cont11','cont12','cont13', 'cont14']
+    for feat in norm_feature:
+        train_test[feat] = np.sqrt(preprocessing.minmax_scale(train_test[feat]))
 
-    train_test["cont6"] = np.log(preprocessing.minmax_scale(train_test["cont6"]) + 0000.1)
-    train_test["cont7"] = np.log(preprocessing.minmax_scale(train_test["cont7"]) + 0000.1)
-    train_test["cont9"] = np.log(preprocessing.minmax_scale(train_test["cont9"]) + 0000.1)
-    train_test["cont13"] = np.log(preprocessing.minmax_scale(train_test["cont13"]) + 0000.1)
-    train_test["cont14"] = (np.maximum(train_test["cont14"] - 0.179722, 0) / 0.665122) ** 0.25
-
-    print('')
     for comb in itertools.combinations(COMB_FEATURE, 2):
         feat = comb[0] + "_" + comb[1]
         train_test[feat] = train_test[comb[0]] + train_test[comb[1]]
